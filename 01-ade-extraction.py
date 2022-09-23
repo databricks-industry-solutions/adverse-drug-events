@@ -10,10 +10,6 @@
 
 # COMMAND ----------
 
-# MAGIC %pip install spark-nlp-display
-
-# COMMAND ----------
-
 import json
 import os
 
@@ -386,7 +382,7 @@ for index, text in enumerate(sample_text):
 
 # MAGIC %md
 # MAGIC # 3. Get Assertion Status of ADE & DRUG Entities
-# MAGIC In this section we will create a new pipeline by setting a WhiteList in `NerConverter` to get only `ADE` entities which comes from `ner_ade_clinical` model. Also will add the `assertion_jsl` model to get the assertion status of them. We can use the same annotators that are common with the NER pipeline we created before.
+# MAGIC In this section we will create a new pipeline by setting a WhiteList in `NerConverter` to get only `ADE` entities which comes from `ner_ade_clinical` model. Also will add the `assertion_dl` model to get the assertion status of them. We can use the same annotators that are common with the NER pipeline we created before.
 
 # COMMAND ----------
 
@@ -395,7 +391,7 @@ ade_ner_converter = NerConverter() \
     .setOutputCol("ade_ner_chunk")\
     .setWhiteList(["ADE"])
  
-assertion = AssertionDLModel.pretrained("assertion_jsl", "en", "clinical/models") \
+assertion = AssertionDLModel.pretrained("assertion_dl", "en", "clinical/models") \
     .setInputCols(["sentence", "ade_ner_chunk", "embeddings"]) \
     .setOutputCol("assertion")
  
@@ -449,9 +445,9 @@ assertion_confidence_df = spark.read.load(f'{ade_demo_util.delta_path}/gold/asse
 # COMMAND ----------
 
 sample_text=(
-  assertion_confidence_df
-  .groupBy('id','assertion').agg(F.count('assertion').alias('count'),F.max('confidence'))
-  .filter('count > 2')
+  ade_ner_confidence_df
+  .groupBy('id','entity').agg(F.count('entity').alias('count'),F.max('confidence'))
+  .filter('count > 1')
   .orderBy('max(confidence)',desc=False)
   .select('id').dropDuplicates()
   .join(ade_df,on='id')
