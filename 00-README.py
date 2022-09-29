@@ -35,10 +35,9 @@ displayHTML(slides_html)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC #NOTE:
-# MAGIC To run the `./01-ade-extraction` extraction notebook, you need to have John Snow Lab's pre-trained models intsalled on your cluster. For more information on how to install these models installed see: [John Snow Labs NLP on Databricks
-# MAGIC ](https://www.johnsnowlabs.com/databricks), in addition you need the following libraires intsalled: 
-# MAGIC <img src="https://raw.githubusercontent.com/JohnSnowLabs/spark-nlp-workshop/master/databricks/solution_accelerators/images/410_cluster.jpg">
+# MAGIC #NOTE: 
+# MAGIC See **Instructions** in the **README** file to set up Partner Connect and run this accelerator. For more information, see [John Snow Labs NLP on Databricks]
+# MAGIC (https://www.johnsnowlabs.com/databricks)
 
 # COMMAND ----------
 
