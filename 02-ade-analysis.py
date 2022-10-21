@@ -1,4 +1,9 @@
 # Databricks notebook source
+# MAGIC %md 
+# MAGIC You may find this series of notebooks at https://github.com/databricks-industry-solutions/adverse-drug-events as well as more information about this solution accelerator at https://www.databricks.com/solutions/accelerators/adverse-drug-event-detection.
+
+# COMMAND ----------
+
 # MAGIC %md
 # MAGIC # Analyse DRUG & ADE Entities
 # MAGIC Now that we have extractd ADE/Drug entities from conversational text in `01-ade-extraction` notebook, we'll create a lakehouse for ADE and perform some analysis to investigae most common ADEs and associated drugs as well as looking at the corealtion between drugs and adverse events.

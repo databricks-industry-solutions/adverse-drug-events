@@ -1,4 +1,9 @@
 # Databricks notebook source
+# MAGIC %md 
+# MAGIC You may find this series of notebooks at https://github.com/databricks-industry-solutions/adverse-drug-events as well as more information about this solution accelerator at https://www.databricks.com/solutions/accelerators/adverse-drug-event-detection.
+
+# COMMAND ----------
+
 # MAGIC %md
 # MAGIC # Extracting Entities and Relationships
 # MAGIC In this notebook we use JohnSnow Lab's [pipelines for adverse drug events](https://nlp.johnsnowlabs.com/2021/07/15/explain_clinical_doc_ade_en.html) to extarct adverse events (ADE) and drug entities from a collection of 20,000 conversational texts. We then store the extracted entitites and raw data in delta lake and analyze the data in `02-ade-analysis` notebook. 

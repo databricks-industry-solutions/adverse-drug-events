@@ -1,4 +1,9 @@
 # Databricks notebook source
+# MAGIC %md 
+# MAGIC You may find this series of notebooks at https://github.com/databricks-industry-solutions/adverse-drug-events as well as more information about this solution accelerator at https://www.databricks.com/solutions/accelerators/adverse-drug-event-detection.
+
+# COMMAND ----------
+
 slides_html="""
 <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vSru8d8LC-C_77PM44Wjo7Ti5zR0OkHSUlFU22BRoRhXkIwYIyMhTZ-7AIsf3hCTGcID-Tu2MarTuiT/embed?start=false&loop=false&delayms=3000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
 """
