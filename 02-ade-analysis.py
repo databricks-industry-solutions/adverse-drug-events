@@ -45,7 +45,8 @@ table_paths={
 # COMMAND ----------
 
 db = "ADE"
-spark.sql(f"CREATE DATABASE IF NOT EXISTS {db}")
+spark.sql(f"DROP DATABASE IF EXISTS {db} CASCADE")
+spark.sql(f"CREATE DATABASE {db}")
 spark.sql(f"USE {db}")
 
 # COMMAND ----------
