@@ -172,7 +172,7 @@ sentence_embeddings = SentenceEmbeddings() \
         .setPoolingStrategy("AVERAGE")
 
 conv_classifier = ClassifierDLModel.pretrained('classifierdl_ade_conversational_biobert', 'en', 'clinical/models')\
-        .setInputCols(['document', 'token', 'sentence_embeddings'])\
+        .setInputCols(['sentence_embeddings'])\
         .setOutputCol('conv_class')
 
 clf_pipeline = Pipeline(stages=[
@@ -361,11 +361,11 @@ sample_text=(
   ade_ner_confidence_df
   .groupBy('id','entity').agg(F.count('entity').alias('count'),F.max('confidence'))
   .filter('count > 1')
-  .orderBy('max(confidence)',desc=False)
+  .orderBy('max(confidence)',desc=True)
   .select('id').dropDuplicates()
   .join(ade_df,on='id')
   .select('text')
-  .limit(5)
+  .limit(3)
 ).collect()
 
 # COMMAND ----------
@@ -376,7 +376,7 @@ light_model = LightPipeline(ade_ner_model)
 for index, text in enumerate(sample_text):
 
     print("\n", "*"*50, f'Sample Text {index+1}', "*"*50, "\n")
-    light_result = light_model.fullAnnotate(text)
+    light_result = light_model.fullAnnotate(text.text)
     # change color of an entity label
     visualiser.set_label_colors({'ADE':'#ff037d', 'DRUG':'#7EBF9B'})    
     ner_vis = visualiser.display(light_result[0], label_col='ner_chunk', document_col='document', return_html=True)
@@ -468,7 +468,7 @@ assertion_vis = AssertionVisualizer()
 as_light_model = LightPipeline(assertion_model)
 
 for index, text in enumerate(sample_text):
-    as_light_result = as_light_model.fullAnnotate(text)
+    as_light_result = as_light_model.fullAnnotate(text.text)
     print("\n", "*"*50, f'Sample Text {index+1}', "*"*50, "\n")
     assertion_vis.set_label_colors({'ADE':'#113CB8'})
     assert_vis =     assertion_vis.display(as_light_result[0], 
@@ -565,7 +565,7 @@ relations_confidence_df.write.format('delta').mode('overwrite').save(f'{ade_demo
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC **Show the relations on the raw text bu using `sparknlp_display` library.**
+# MAGIC **Show the relations on the raw text by using `sparknlp_display` library.**
 
 # COMMAND ----------
 
@@ -577,11 +577,11 @@ sample_text=(
   relations_confidence_df
   .groupBy('id','relation').agg(F.count('relation').alias('count'),F.max('confidence'))
   .filter('count > 2')
-  .orderBy('max(confidence)',desc=False)
+  .orderBy('max(confidence)',desc=True)
   .select('id').dropDuplicates()
   .join(ade_df,on='id')
   .select('text')
-  .limit(5)
+  .limit(3)
 ).collect()
 
 # COMMAND ----------
@@ -597,7 +597,7 @@ for index, text in enumerate(sample_text):
 
     print("\n", "*"*50, f'Sample Text {index+1}', "*"*50, "\n")
     
-    re_light_result = re_light_model.fullAnnotate(text)
+    re_light_result = re_light_model.fullAnnotate(text.text)
 
     relation_vis = re_vis.display(re_light_result[0],
                                   relation_col = 'relations',
