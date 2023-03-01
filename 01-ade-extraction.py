@@ -6,7 +6,7 @@
 
 # MAGIC %md
 # MAGIC # Extracting Entities and Relationships
-# MAGIC In this notebook we use JohnSnow Lab's [pipelines for adverse drug events](https://nlp.johnsnowlabs.com/2021/07/15/explain_clinical_doc_ade_en.html) to extarct adverse events (ADE) and drug entities from a collection of 20,000 conversational texts. We then store the extracted entitites and raw data in delta lake and analyze the data in `02-ade-analysis` notebook. 
+# MAGIC In this notebook we use JohnSnow Lab's [pipelines for adverse drug events](https://nlp.johnsnowlabs.com/2021/07/15/explain_clinical_doc_ade_en.html) to extract adverse events (ADE) and drug entities from a collection of 20,000 conversational texts. We then store the extracted entities and raw data in delta lake and analyze the data in `02-ade-analysis` notebook. 
 
 # COMMAND ----------
 
@@ -45,7 +45,7 @@ spark
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC For simplicity and ease of use, we run a notebook in the collection which contains definitions and classes for setting and creating paths as well as downloading relevant datasets for this excersize. 
+# MAGIC For simplicity and ease of use, we run a notebook in the collection which contains definitions and classes for setting and creating paths as well as downloading relevant datasets for this exercise. 
 
 # COMMAND ----------
 
@@ -188,7 +188,7 @@ clf_model = clf_pipeline.fit(empty_data)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Now we transform the conversational texts dataframe using the ADE calssifier pipeline and write the resulting dataframe to delta lake for future access.
+# MAGIC Now we transform the conversational texts dataframe using the ADE classifier pipeline and write the resulting dataframe to delta lake for future access.
 
 # COMMAND ----------
 
@@ -215,7 +215,7 @@ confusion_matrix
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Based on the above conufsion matrix our model has an accuracy of `(TP+TN)/(P+N) = 86%`
+# MAGIC Based on the above confusion matrix our model has an accuracy of `(TP+TN)/(P+N) = 86%`
 
 # COMMAND ----------
 
@@ -371,15 +371,15 @@ sample_text=(
 # COMMAND ----------
 
 from sparknlp_display import NerVisualizer
-visualiser = NerVisualizer()
+visualizer = NerVisualizer()
 light_model = LightPipeline(ade_ner_model)
 for index, text in enumerate(sample_text):
 
     print("\n", "*"*50, f'Sample Text {index+1}', "*"*50, "\n")
     light_result = light_model.fullAnnotate(text.text)
     # change color of an entity label
-    visualiser.set_label_colors({'ADE':'#ff037d', 'DRUG':'#7EBF9B'})    
-    ner_vis = visualiser.display(light_result[0], label_col='ner_chunk', document_col='document', return_html=True)
+    visualizer.set_label_colors({'ADE':'#ff037d', 'DRUG':'#7EBF9B'})    
+    ner_vis = visualizer.display(light_result[0], label_col='ner_chunk', document_col='document', return_html=True)
     
     displayHTML(ner_vis)
 

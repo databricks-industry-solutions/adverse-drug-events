@@ -6,7 +6,7 @@
 
 # MAGIC %md
 # MAGIC # Analyse DRUG & ADE Entities
-# MAGIC Now that we have extractd ADE/Drug entities from conversational text in `01-ade-extraction` notebook, we'll create a lakehouse for ADE and perform some analysis to investigae most common ADEs and associated drugs as well as looking at the corealtion between drugs and adverse events.
+# MAGIC Now that we have extractd ADE/Drug entities from conversational text in `01-ade-extraction` notebook, we'll create a lakehouse for ADE and perform some analysis to investigate most common ADEs and associated drugs as well as looking at the correlation between drugs and adverse events.
 
 # COMMAND ----------
 
@@ -160,7 +160,7 @@ for tab,path in table_paths.items():
 
 # MAGIC %md
 # MAGIC ## 3. DRUG-ADE association
-# MAGIC Now let's take a look at the data and see which ADEs are associated with which drugs. First let't take a look at the counts of `DRUG/ADE` pairs based on co-occurance within the same document.
+# MAGIC Now let's take a look at the data and see which ADEs are associated with which drugs. First let't take a look at the counts of `DRUG/ADE` pairs based on co-occurrence within the same document.
 
 # COMMAND ----------
 
@@ -242,7 +242,7 @@ data_pdf=ade_drug_pdf.loc[selected_rows,selected_columns]
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Now let's visualize the heatmap of the co-occurence of drugs and ADEs. We can directly look at the counts of drugs by ADE
+# MAGIC Now let's visualize the heatmap of the co-occurrence of drugs and ADEs. We can directly look at the counts of drugs by ADE
 
 # COMMAND ----------
 
@@ -266,7 +266,7 @@ fg.show()
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Based on this, we notice that the most common ADE/drug pair is  *heparin*/*[throbocytopenia](https://www.mayoclinic.org/diseases-conditions/thrombocytopenia/symptoms-causes/syc-20378293#:~:text=Thrombocytopenia%20is%20a%20condition%20in,plugs%20in%20blood%20vessel%20injuries.)*, which is consitent with the fact that [heparin](https://www.mayoclinic.org/drugs-supplements/heparin-intravenous-route-subcutaneous-route/description/drg-20068726) is an anticoagulant and most [reported adverse events](https://www.mayoclinic.org/drugs-supplements/heparin-intravenous-route-subcutaneous-route/side-effects/drg-20068726) are related to abnormal bleeding. 
+# MAGIC Based on this, we notice that the most common ADE/drug pair is  *heparin*/*[throbocytopenia](https://www.mayoclinic.org/diseases-conditions/thrombocytopenia/symptoms-causes/syc-20378293#:~:text=Thrombocytopenia%20is%20a%20condition%20in,plugs%20in%20blood%20vessel%20injuries.)*, which is consistent with the fact that [heparin](https://www.mayoclinic.org/drugs-supplements/heparin-intravenous-route-subcutaneous-route/description/drg-20068726) is an anticoagulant and most [reported adverse events](https://www.mayoclinic.org/drugs-supplements/heparin-intravenous-route-subcutaneous-route/side-effects/drg-20068726) are related to abnormal bleeding. 
 # MAGIC In this analysis however, we do not take the expected frequency of a given ADE into account. In order to reflect any correlation between the ADE in question and a given condition, we need to normalize the counts. To do so, we use [`MinMaxScaler`](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.MinMaxScaler.html) to scale the values. 
 
 # COMMAND ----------
@@ -278,12 +278,12 @@ normalized_data=MinMaxScaler().fit(data_pdf).transform(data_pdf)
 
 # DBTITLE 1,DRUG/ADE association (normalized counts)
 norm_data_pdf=pd.DataFrame(normalized_data,index=data_pdf.index,columns=data_pdf.columns)
-plot_heatmap(norm_data_pdf,'normalized occurence')
+plot_heatmap(norm_data_pdf,'normalized occurrence')
 
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC In the above plot we are able to compare ADEs accross different drugs.
+# MAGIC In the above plot we are able to compare ADEs across different drugs.
 
 # COMMAND ----------
 
@@ -294,7 +294,7 @@ plot_heatmap(norm_data_pdf,'normalized occurence')
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Now let us only consider drug-ade pairs that are linked, i.e. `realtion=1`
+# MAGIC Now let us only consider drug-ade pairs that are linked, i.e. `relation=1`
 
 # COMMAND ----------
 
@@ -346,7 +346,7 @@ fg.show()
 
 # MAGIC %md
 # MAGIC ## 4. Interactive dashboard
-# MAGIC Using databricks SQL capabilities we can also create interactive dashboards for monitoring ADEs based on conversational text. For example, in this dashboard users can select a drug of interest from a dropdown menue to see all reported ADEs and their count
+# MAGIC Using databricks SQL capabilities we can also create interactive dashboards for monitoring ADEs based on conversational text. For example, in this dashboard users can select a drug of interest from a dropdown menu to see all reported ADEs and their count
 # MAGIC <img src="https://drive.google.com/uc?id=1TL8z5cjKLgXjqCcbgIA4Lfg8M6lXmyzG">
 
 # COMMAND ----------

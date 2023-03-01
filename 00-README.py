@@ -28,12 +28,12 @@ displayHTML(slides_html)
 # MAGIC - Checking Assertion Status of ADEs
 # MAGIC - Relations Between ADEs and Drugs
 # MAGIC 
-# MAGIC There are three noetbooks in this package:
+# MAGIC There are three notebooks in this package:
 # MAGIC 
 # MAGIC 
-# MAGIC 1. `./01-ade-extraction`: Extract ADE, DRUGS, assertion status and relationships betwene drugs and ades
-# MAGIC 2. `./02-ade-analysis`: Create a deltakake of ADE and drugs  based on extracted entities and analyze the results (drug/ade correlations)
-# MAGIC 3. `./03-config`: Notebook for configurating the environment
+# MAGIC 1. `./01-ade-extraction`: Extract ADE, DRUGS, assertion status and relationships between drugs and ades
+# MAGIC 2. `./02-ade-analysis`: Create a deltalake of ADE and drugs  based on extracted entities and analyze the results (drug/ade correlations)
+# MAGIC 3. `./03-config`: Notebook for configuring the environment
 # MAGIC 
 # MAGIC <img src="https://drive.google.com/uc?id=1TL8z5cjKLgXjqCcbgIA4Lfg8M6lXmyzG">
 
